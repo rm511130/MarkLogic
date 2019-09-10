@@ -1,0 +1,53 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: marklogic
+spec:
+  serviceName: "ml-service"
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: marklogic
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: 'marklogic'
+          image: rmeira/marklogic10:v1 
+          imagePullPolicy: Always
+          command: ["/opt/entry-point.sh"]
+          ports:
+            - containerPort: 7997
+              name: health-check
+            - containerPort: 7998
+              name: cluster-port
+            - containerPort: 7999
+              name: cluster-port2
+            - containerPort: 8000
+              name: app-services
+            - containerPort: 8001
+              name: admin
+            - containerPort: 8002
+              name: manage
+          lifecycle:
+            preStop:
+              exec:
+                # SIGTERM triggers a quick exit; gracefully terminate instead
+                command: ["/etc/init.d/MarkLogic stop"]
+          volumeMounts:
+            - name: ml-data
+              mountPath: /var/opt/MarkLogic
+      imagePullSecrets:
+      - name: registry-secret
+  volumeClaimTemplates:
+    - metadata:
+        name: ml-data
+        annotations:
+          volume.beta.kubernetes.io/storage-class: ci-storage
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        storageClassName: ci-storage
