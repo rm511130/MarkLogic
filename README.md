@@ -18,5 +18,24 @@ docker build -t rmeira/marklogicv10:v1 .
 docker push rmeira/marklogicv10:v1
 ```
 
+- Now take a look at the `nginx` subdirectory and the steps you must execute there to get the Nginx image. We will start Nginx with the following sequence of commands:
+
+```
+cd /work/marklogic                           # to make sure we're back from the /work/marklogic/nginx directory
+kubectl create -f registry-secret.yml
+kubectl create -f ml-service.yml
+kubectl create -f stateful-set.yml
+cd /work/marklogic-nginx
+kubectl create -f nginx-ingress.rc.yml
+```
+
+- Now let's take a look:
+
+```
+kubectl proxy
+open http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/overview
+```
+
+
 
 
