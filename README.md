@@ -13,5 +13,10 @@ cd /work/marklogic
 - The [Dockerfile](https://github.com/rm511130/MarkLogic/blob/master/Dockerfile) in this folder points to a MarkLogic-10.0-1.x86_64.rpm file which must exist in the same directory.
 - MarkLogic-10.0-1.x86_64.rpm needs to be downloaded directly from [MarkLogic's Product Web site](http://developer.marklogic.com/products)
 
+```
+docker build -t rmeira/marklogicv10:v1 .
+docker push rmeira/marklogicv10:v1
+```
+
 
 
