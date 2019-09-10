@@ -1,4 +1,5 @@
-# marklogic_v10_on_k8s
+# Installing MarkLogic v10.0.1 on a PKS K8s Cluster
+
 - MarkLogic installation instructions for a v10 version of MarkLogic on a PKS K8s Cluster 
 - I'm using a Mac (not a Windows PC)
 
