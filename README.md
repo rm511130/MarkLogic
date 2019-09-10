@@ -10,4 +10,8 @@ git clone https://github.com/rm511130/marklogic
 cd /work/marklogic
 ```
 
+- The Dockerfile in this folder points to a MarkLogic-10.0-1.x86_64.rpm file which must exist in the same directory.
+- MarkLogic-10.0-1.x86_64.rpm needs to be downloaded directly from [MarkLogic's Product Web site](http://developer.marklogic.com/products)
+
+
 
