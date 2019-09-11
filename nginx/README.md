@@ -1,6 +1,10 @@
-- A few commands are necessary to get Nginx up and running:
+# NGINX container to manage ingress/access to each MarkLogic node
+
+- A few commands are necessary to set-up the Nginx image:
 
 ```
+cd /work/marklogic/nginx
 docker build -t rmeira/marklogic-nginx:v1 .
 docker push rmeira/marklogic-nginx:v1
+cd /work/marklogic
 ```
