@@ -24,8 +24,8 @@ cd /work/marklogic
 
 ```
 cd /work/marklogic
-docker build -t rmeira/marklogicv10:v1 .   # the dot is important, do not delete it
-docker push rmeira/marklogicv10:v1
+docker build -t rmeira/marklogic10:v1 .   # the dot is important, do not delete it
+docker push rmeira/marklogic10:v1
 ```
 
 - Check your [Docker Hub](https://hub.docker.com/) repo to make sure your `marklogicv10` image was uploaded properly.
