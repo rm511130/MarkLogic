@@ -19,8 +19,8 @@ cd /work/marklogic
 - If you'd like to build your own Docker Image of Marklogic, then follow the instructions below.
 - First, you will need to downlad [MarkLogic-10.0-1.x86_64.rpm](https://developer.marklogic.com/products/marklogic-server/10.0) directly from [MarkLogic's Product Web site](http://developer.marklogic.com/products) and this step will entail creating a MarkLogic user account.
 - If you open the [Dockerfile](https://github.com/rm511130/MarkLogic/blob/master/Dockerfile) in this folder, you will see that it points to a `MarkLogic-10.0-1.x86_64.rpm` file which must exist in the same `/work/marklogic` directory. When you download the `.rpm` file its name or version may have changed, so you'll need to update your Dockerfile contents to match the new name.
+- You can find more details [here](https://www.marklogic.com/blog/docker-deploy-kubernetes/) about the four initialization scripts `mlconfig.sh`, `entry-point.sh`, `setup-child.sh` and `setup-master.sh` used by the Dockerfile to create the MarkLogic v10 Docker Image. Please look through [`mlconfig.sh`](https://github.com/rm511130/MarkLogic/blob/master/mlconfig.sh) because it contains passwords you may wish to change.
 - The specific `docker build` and `docker push` commands shown below serve to create a [MarkLogic Docker Image](https://cloud.docker.com/u/rmeira/repository/docker/rmeira/marklogic10) in my (rmeira) public Docker Hub repo. You should replace the `rmeira` part of the commands with your own Docker Username.
-- You can find more details [here](https://www.marklogic.com/blog/docker-deploy-kubernetes/) about the four initialization scripts `mlconfig.sh`, `entry-point.sh`, `setup-child.sh` and `setup-master.sh` used by the Dockerfile to create the MarkLogic v10 Docket Image. Take the time to look through [`mlconfig.sh`](https://github.com/rm511130/MarkLogic/blob/master/mlconfig.sh) because it contains passwords you may wish to change.
 
 ```
 cd /work/marklogic
@@ -42,6 +42,8 @@ cd /work/marklogic/nginx
 docker build -t rmeira/marklogic-nginx:v1 .   # the dot is important, do not delete it
 docker push rmeira/marklogic-nginx:v1
 ```
+- Check your [Docker Hub](https://hub.docker.com/) repo to make sure your `marklogic-nginx` image was uploaded properly.
+
 
 
 
