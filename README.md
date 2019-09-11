@@ -39,9 +39,12 @@ docker push rmeira/marklogicv10:v1
 
 ```
 cd /work/marklogic/nginx
-docker build -t rmeira/marklogic-nginx:v1 .   # the dot is important, do not delete it
+docker build -t rmeira/marklogic-nginx:v1 .   # the dot is important
 docker push rmeira/marklogic-nginx:v1
+cd /work/marklogic
 ```
+
+- Note that the Dockerfile instructs the build process to copy [`nginx.conf`](https://github.com/rm511130/MarkLogic/blob/master/nginx/nginx.conf) and [`upstream-defs.conf`](https://github.com/rm511130/MarkLogic/blob/master/nginx/upstream-defs.conf)
 - Check your [Docker Hub](https://hub.docker.com/) repo to make sure your `marklogic-nginx` image was uploaded properly.
 
 
