@@ -28,7 +28,7 @@ docker build -t rmeira/marklogic10:v1 .   # the dot is important, do not delete 
 docker push rmeira/marklogic10:v1
 ```
 
-- Check your [Docker Hub](https://hub.docker.com/) repo to make sure your `marklogicv10` image was uploaded properly.
+- Check your [Docker Hub](https://hub.docker.com/) repo to make sure your `marklogic10` image was uploaded properly.
 
 ## 3. Creation of an Nginx Ingress Controller Docker Image 
 
