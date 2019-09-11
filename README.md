@@ -1,6 +1,6 @@
-# Installation Instructions for MarkLogic v10.0.1 on a PKS K8s Cluster
+# Installation Instructions for MarkLogic on a PKS Kubernetes Cluster
 
-- MarkLogic installation instructions for a v10.0.1 version of MarkLogic on a [PKS](https://pivotal.io/platform/pivotal-container-service) v1.5.0 K8s v1.14.5 Cluster 
+- MarkLogic v10.0.1 installation on a [PKS](https://pivotal.io/platform/pivotal-container-service) v1.5.0 Kubernetes v1.14.5 Cluster 
 - I'm using a Mac (not a Windows PC) and following the instructions in this [blog](https://www.marklogic.com/blog/docker-deploy-kubernetes/) with some changes to accommodate my target environment
 - Start by cloning this repo into a `/work` directory:
 
@@ -10,8 +10,10 @@ git clone https://github.com/rm511130/marklogic
 cd /work/marklogic
 ```
 
-- The [Dockerfile](https://github.com/rm511130/MarkLogic/blob/master/Dockerfile) in this folder points to a MarkLogic-10.0-1.x86_64.rpm file which must exist in the same directory.
-- MarkLogic-10.0-1.x86_64.rpm needs to be downloaded directly from [MarkLogic's Product Web site](http://developer.marklogic.com/products)
+- MarkLogic-10.0-1.x86_64.rpm needs to be downloaded directly from [MarkLogic's Product Web site](http://developer.marklogic.com/products) and this step will entail creating an account with MarkLogic.
+- The [Dockerfile](https://github.com/rm511130/MarkLogic/blob/master/Dockerfile) in this folder points to a MarkLogic-10.0-1.x86_64.rpm file which must exist in the same `/work/marklogic` directory.
+- The `docker build` and `docker push` commands shown below will create a [MarkLogic Docker Image](https://cloud.docker.com/u/rmeira/repository/docker/rmeira/marklogic10) in my (rmeira) public Docker Hub repo. You should replace the `rmeira` part of the commands with your own Docker Username or you can leverage the one I've already built.
+
 
 ```
 docker build -t rmeira/marklogicv10:v1 .
