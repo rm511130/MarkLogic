@@ -12,7 +12,7 @@ git clone https://github.com/rm511130/marklogic
 cd /work/marklogic
 ```
 
-## 2. Creation of MarkLogic Docker Image
+## 2. Optional creation of MarkLogic Docker Image
 
 - You can skip step #2 by opting to use the [Marklogic v10 Image](https://cloud.docker.com/u/rmeira/repository/docker/rmeira/marklogic10) I have already built. There's actually nothing to be downloaded at this point in time because the scripts we will be using later on, already point to the Docker Images in my Docker Hub repo.
 
@@ -30,7 +30,7 @@ docker push rmeira/marklogic10:v1
 
 - Check your [Docker Hub](https://hub.docker.com/) repo to make sure your `marklogic10` image was uploaded properly.
 
-## 3. Creation of an Nginx Ingress Controller Docker Image 
+## 3. Optional creation of an Nginx Ingress Controller Docker Image 
 
 - Just like in the previous step #2, you can simply opt to use the [Nginx Docker Image](https://cloud.docker.com/u/rmeira/repository/docker/rmeira/marklogic-nginx) I've already built using the very same steps described below. If you plan to do so, go ahead and skip to step #4. There's no need to download anything at this point, because the scripts we will be using already point to my `rmeira/marklogic-nginx` docker image.
 
