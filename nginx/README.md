@@ -1,6 +1,6 @@
 # NGINX container to manage ingress/access to each MarkLogic node
 
-- A few commands are necessary to set-up the Nginx image:
+- A few commands are necessary to create an Nginx Ingress image:
 
 ```
 cd /work/marklogic/nginx
