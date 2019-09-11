@@ -5,7 +5,7 @@
 - Start by cloning this repo into a `/work` directory:
 
 ```
-cd /work
+mkdir -p /work; cd /work
 git clone https://github.com/rm511130/marklogic
 cd /work/marklogic
 ```
