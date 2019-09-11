@@ -106,22 +106,30 @@ You can now switch between clusters by using:
 $kubectl config use-context <cluster-name>
 ```
 ```
-pks-pv kubectl cluster-info
+kubectl cluster-info
 ```
 ```
 Kubernetes master is running at https://small.pks.pcf4u.com:8443
 CoreDNS is running at https://small.pks.pcf4u.com:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
 ```
 
+## 5. Registry Secret
 
+- The [`registry-secret.yml`](https://github.com/rm511130/MarkLogic/blob/master/registry-secret.yml) contains instructions that need to be followed for the creation of your specific `dockerconfigjson` base64 secret.
 
-
-
-
-
+- In my case, I had to execute:
 
 ```
-cd /work/marklogic                           # to make sure we're back from the /work/marklogic/nginx directory
+openssl base64 -in /Users/rmeria/.docker/config.json -out /Users/ralphmeria/.docker/config_base64.txt
+cat /Users/rmeria/.docker/config_base64.txt
+```
+
+## 6. Creating a MarkLogic v10 DB on K8s 
+
+- With the `small` K8s cluster up and running, we need only execute the following commands:
+
+```
+cd /work/marklogic                      
 kubectl create -f registry-secret.yml
 kubectl create -f ml-service.yml
 kubectl create -f stateful-set.yml
