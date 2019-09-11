@@ -35,7 +35,7 @@ docker push rmeira/marklogicv10:v1
 - Just like in the previous step #2, you can simply opt to use the [Nginx Docker Image](https://cloud.docker.com/u/rmeira/repository/docker/rmeira/marklogic-nginx) I've already built using the very same steps described below. If you plan to do so, go ahead and skip to step #4. There's no need to download anything at this point, because the scripts we will be using already point to my `rmeira/marklogic-nginx` docker image.
 
 - If you'd like to build your own Nginx Docker Image, then follow the instructions below.
-- Execute `cd /work/marklogic/nginx` and take a look at `nginx` subdirectory. There's a [Dockerfile](https://github.com/rm511130/MarkLogic/blob/master/nginx/Dockerfile) that describes how to build the Docker Image of an Nginx Ingress controller image. Make sure to replace `rmeira` with your own Docker Username before executing the commands below.
+- Execute `cd /work/marklogic/nginx` and take a look at `nginx` subdirectory. There's a [Dockerfile](https://github.com/rm511130/MarkLogic/blob/master/nginx/Dockerfile) that describes how to build an Nginx Ingress controller Docker Image. Make sure to replace `rmeira` with your own Docker Username before executing the commands below.
 
 ```
 cd /work/marklogic/nginx
@@ -44,13 +44,81 @@ docker push rmeira/marklogic-nginx:v1
 cd /work/marklogic
 ```
 
-- Note that the Dockerfile instructs the build process to copy [`nginx.conf`](https://github.com/rm511130/MarkLogic/blob/master/nginx/nginx.conf) and [`upstream-defs.conf`](https://github.com/rm511130/MarkLogic/blob/master/nginx/upstream-defs.conf)
+- Note that the Dockerfile instructs the build process to copy [`nginx.conf`](https://github.com/rm511130/MarkLogic/blob/master/nginx/nginx.conf) and [`upstream-defs.conf`](https://github.com/rm511130/MarkLogic/blob/master/nginx/upstream-defs.conf). You should take a quick look at these two files.
 - Check your [Docker Hub](https://hub.docker.com/) repo to make sure your `marklogic-nginx` image was uploaded properly.
 
+## 4. Creation of a Kubernetes Cluster
+
+- I'm leveraging an existing PKS installation, so the process to create a K8s Cluster is quite simple:
+
+```
+pks login --api https://api.pks.pcf4u.com -k -u pks_admin -p password
+pks create-cluster small --plan small --num-nodes 8 --external-hostname small.pks.pcf4u.com
+```
+
+- Proceed as follows:
+
+```
+pks cluster small  
+```
+
+- You should wait until you see `CREATE` and `succeeded` as shown below:
+
+```
+PKS Version:              1.5.0-build.32
+Name:                     small
+K8s Version:              1.14.5
+Plan Name:                small
+UUID:                     d08412d5-835b-47e3-83a3-eedb549ab892
+Last Action:              CREATE
+Last Action State:        succeeded
+Last Action Description:  Instance provisioning completed
+Kubernetes Master Host:   small.pks.pcf4u.com
+Kubernetes Master Port:   8443
+Worker Nodes:             8
+Kubernetes Master IP(s):  10.0.110.1
+Network Profile Name:
+```
+
+- A DNS entry was made to map `small.pks.pcf4u.com` to `10.0.110.1`
+
+```
+nslookup small.pks.pcf4u.com
+```
+```
+Server:		1.1.1.1
+Address:	1.1.1.1#53
+
+Non-authoritative answer:
+Name:	small.pks.pcf4u.com
+Address: 10.0.110.1
+```
+- And let's get the cluster credentials so we can issue Kubectl commands:
+
+```
+pks get-credentials small
+```
+```
+Fetching credentials for cluster small.
+Context set for cluster small.
+
+You can now switch between clusters by using:
+$kubectl config use-context <cluster-name>
+```
+```
+pks-pv kubectl cluster-info
+```
+```
+Kubernetes master is running at https://small.pks.pcf4u.com:8443
+CoreDNS is running at https://small.pks.pcf4u.com:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+```
 
 
 
-and the steps you must execute there to get the Nginx image. We will start Nginx with the following sequence of commands:
+
+
+
+
 
 ```
 cd /work/marklogic                           # to make sure we're back from the /work/marklogic/nginx directory
