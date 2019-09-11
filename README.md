@@ -1,4 +1,4 @@
-# Installation Instructions for MarkLogic on a PKS Kubernetes Cluster
+# Installation Instructions for MarkLogic on a PKS K8s Cluster
 
 - MarkLogic v10.0.1 installation on a [PKS](https://pivotal.io/platform/pivotal-container-service) v1.5.0 Kubernetes v1.14.5 Cluster 
 - I'm using a Mac (not a Windows PC) and following the instructions in this [blog](https://www.marklogic.com/blog/docker-deploy-kubernetes/) with some changes to accommodate my target environment
