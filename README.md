@@ -133,6 +133,14 @@ cd /work/marklogic
 kubectl create -f registry-secret.yml
 kubectl create -f ml-service.yml
 kubectl create -f stateful-set.yml
+```
+
+- Wait until you see:
+
+![](./images/all-is-well.png)
+
+
+```
 cd /work/marklogic-nginx
 kubectl create -f nginx-ingress.rc.yml
 ```
