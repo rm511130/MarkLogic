@@ -124,6 +124,20 @@ openssl base64 -in /Users/rmeria/.docker/config.json -out /Users/ralphmeria/.doc
 cat /Users/rmeria/.docker/config_base64.txt
 ```
 
+## 6. Accessing the Kubernetes Dashboard
+
+- Execute the following commands to access your K8s Dashboard:
+
+```
+kubectl proxy --port=9999
+open http://localhost:9999/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/overview
+```
+
+- When challenged to login, follow the five steps shown below:
+
+![](./images/k8s-dashboard.png)
+
+
 ## 6. Creating a MarkLogic v10 DB on K8s 
 
 - With the `small` K8s cluster up and running, we need only execute the following commands:
@@ -135,21 +149,31 @@ kubectl create -f ml-service.yml
 kubectl create -f stateful-set.yml
 ```
 
-- Wait until you see:
+- Wait until you see the nine objects pointed out below by the yellow arrows, before proceeding with step #7.
 
 ![](./images/all-is-well.png)
 
 
+## 7. Creating an Ingress Controller for our MarkLogic v10 on K8s 
+
+- Execute the following commands:
+
 ```
-cd /work/marklogic-nginx
+cd /work/marklogic/nginx
 kubectl create -f nginx-ingress.rc.yml
 ```
+
+- And wait until you see:
+
+   - a working nginx-rc ingress Pod
+   - a working nginx-ingress-rc Replication Controller
+
 
 - Now let's take a look:
 
 ```
-kubectl proxy
-open http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/overview
+kubectl proxy --port=9999
+open http://localhost:9999/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/overview
 ```
 
 
