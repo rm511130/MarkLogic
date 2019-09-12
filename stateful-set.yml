@@ -1,8 +1,11 @@
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: marklogic
 spec:
+  selector:
+    matchLabels:
+      app: marklogic
   serviceName: "ml-service"
   replicas: 3
   template:
