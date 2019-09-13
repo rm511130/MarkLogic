@@ -176,11 +176,10 @@ kubectl create -f ml-service.yml
 kubectl create -f stateful-set.yml
 ```
 
-- Wait until you see the nine objects below (next to the yellow arrows), before proceeding with step #8.
+- Wait until you see the nine objects below (next to the yellow arrows), before proceeding with step #8. You will see a _pod has unbound immediate PersistentVolumeClaims_ error message. Not to worry. Wait a couple of minutes and you will see that the message goes away once all the K8s objects are up and running.
 
 ![](./images/all-is-well.png)
 
-- You may see a _SchedulerPredicates failed due to PersistentVolumeClaim is not bound_ error message. If that is the case you should wait a couple of minutes and you will see that the message goes away once all the K8s objects are up and running.
 
 
 ## 9. Creating an Ingress Controller for our MarkLogic v10 on K8s 
