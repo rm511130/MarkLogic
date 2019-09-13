@@ -156,11 +156,13 @@ kubectl describe storageclasses.storage.k8s.io
 
 - We will go ahead and create a StorageClass called `ci-storage` which will require the use of a StorageClass yaml definition file.
 
-  - If your K8s cluster is running on a vSphere environment, use the following command:
+  - If your K8s cluster is running on a vSphere environment, validate the contents of [vSphere-storageclass.yml](https://github.com/rm511130/MarkLogic/blob/master/vSphere-storageclass.yml) and use it in the following command:
   
   ```
   kubectl create -f vSphere-storageclass.yml
   ```
+  
+  - If your K8s cluster were running on an AWS environment, you would use [aws-storageclass.yml]
 
 
 
