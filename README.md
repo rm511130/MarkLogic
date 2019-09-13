@@ -164,9 +164,9 @@ kubectl describe storageclasses.storage.k8s.io
   
   - If your K8s cluster were running on an AWS environment, you would use [aws-storageclass.yml](https://github.com/rm511130/MarkLogic/blob/master/aws-storageclass.yml) in the following command:
   
- ```
- kubectl create -f aws-storageclass.yml
- ```
+  ```
+  kubectl create -f aws-storageclass.yml
+  ```
 
 ## 8. Accessing the Kubernetes Dashboard
 
