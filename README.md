@@ -128,8 +128,8 @@ CoreDNS is running at https://small.pks.pcf4u.com:8443/api/v1/namespaces/kube-sy
 - In my case, I had to execute and use the output to alter my `registry-secret.yml` file:
 
 ```
-openssl base64 -in /Users/rmeria/.docker/config.json -out /Users/rmeira/.docker/config_base64.txt
-cat /Users/rmeria/.docker/config_base64.txt
+openssl base64 -in ~/.docker/config.json -out ~/.docker/config_base64.txt
+cat ~/.docker/config_base64.txt
 ```
 
 ## 6. Defining a Pod Security Policy, a Cluster Role and a Cluster Role Binding:
