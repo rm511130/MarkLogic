@@ -162,11 +162,13 @@ kubectl describe storageclasses.storage.k8s.io
   kubectl create -f vSphere-storageclass.yml
   ```
   
-  - If your K8s cluster were running on an AWS environment, you would use [aws-storageclass.yml]
+  - If your K8s cluster were running on an AWS environment, you would use [aws-storageclass.yml](https://github.com/rm511130/MarkLogic/blob/master/aws-storageclass.yml) in the following command:
+  
+ ```
+ kubectl create -f aws-storageclass.yml
+ ```
 
-
-
-## 7. Accessing the Kubernetes Dashboard
+## 8. Accessing the Kubernetes Dashboard
 
 - Using a terminal window that needs to remain open, execute the following command to access your K8s Dashboard:
 
@@ -183,10 +185,10 @@ http://localhost:9999/api/v1/namespaces/kube-system/services/https:kubernetes-da
 
 ![](./images/k8s-dashboard.png)
 
-- Leave the browser open and proceed to step #8.
+- Leave the browser open and proceed to step #9.
 
 
-## 8. Creating a MarkLogic v10 DB on K8s 
+## 9. Creating a MarkLogic v10 DB on K8s 
 
 - Using the `small` K8s cluster, we need only execute the following commands:
 
@@ -197,13 +199,13 @@ kubectl create -f ml-service.yml
 kubectl create -f stateful-set.yml
 ```
 
-- Wait until you see the nine objects below (next to the yellow arrows), before proceeding with step #9. You will see a _pod has unbound immediate PersistentVolumeClaims_ error message. Not to worry. Wait ~5 minutes and you will see that the message goes away once all the K8s objects are up and running.
+- Wait until you see the nine objects below (next to the yellow arrows), before proceeding with step #10. You will see a _pod has unbound immediate PersistentVolumeClaims_ error message. Not to worry. Wait ~5 minutes and you will see that the message goes away once all the K8s objects are up and running.
 
 ![](./images/all-is-well.png)
 
 
 
-## 9. Creating an Ingress Controller for our MarkLogic v10 on K8s 
+## 10. Creating an Ingress Controller for our MarkLogic v10 on K8s 
 
 - Execute the following commands:
 
@@ -217,7 +219,7 @@ kubectl create -f nginx-ingress.rc.yml
    - a working nginx-rc ingress Pod
    - a working nginx-ingress-rc Replication Controller
 
-## 10. Now let's take a look at MarkLogic's Admin GUI
+## 11. Now let's take a look at MarkLogic's Admin GUI
 
 - Follow the steps shown below:
 
@@ -237,7 +239,7 @@ kubectl create -f nginx-ingress.rc.yml
    - Check the status of resources on your systems
 
 
-## Delete Everything and Clean-up Step
+## 12. Delete Everything and Clean-up
 
 ```
 pks login --api https://api.pks.pcf4u.com -k -u pks_admin -p password
