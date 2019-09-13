@@ -132,7 +132,7 @@ openssl base64 -in ~/.docker/config.json -out ~/.docker/config_base64.txt
 cat ~/.docker/config_base64.txt
 ```
 
-- The registry-secret information is referenced by the [stateful-set.ym](https://github.com/rm511130/MarkLogic/blob/master/stateful-set.yml) definition.
+- The registry-secret information is referenced by the [stateful-set.yml](https://github.com/rm511130/MarkLogic/blob/master/stateful-set.yml) definition.
 
 ## 6. Defining a Pod Security Policy, a Cluster Role and a Cluster Role Binding:
 
