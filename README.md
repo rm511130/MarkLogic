@@ -217,6 +217,13 @@ kubectl create -f nginx-ingress.rc.yml
    - Check the status of resources on your systems
 
 
+## Delete Everything and Clean-up Step
+
+```
+pks login --api https://api.pks.pcf4u.com -k -u pks_admin -p password
+pks delete-cluster small                                             
+```
+
 
 
 
