@@ -132,6 +132,8 @@ openssl base64 -in ~/.docker/config.json -out ~/.docker/config_base64.txt
 cat ~/.docker/config_base64.txt
 ```
 
+- The registry-secret information is referenced by the [stateful-set.ym](https://github.com/rm511130/MarkLogic/blob/master/stateful-set.yml) definition.
+
 ## 6. Defining a Pod Security Policy, a Cluster Role and a Cluster Role Binding:
 
 - Execute the following commands:
@@ -143,6 +145,23 @@ kubectl create -f marklogic-ClusterRoleBinding.yml
 ```
 
 - These commands allow the creation of the objects needed to run MarkLogic on K8s.
+
+## 7. StorageClass Definition
+
+- In order to give Pods persistent disk space, we need to issue Persistent Volume Claims which will reference a StorageClass. You can look for existing StorageCLasses using the command below:
+
+```
+kubectl describe storageclasses.storage.k8s.io
+```
+
+- We will go ahead and create a StorageClass called `ci-storage` which will require the use of a StorageClass yaml definition file.
+
+  - If your K8s cluster is running on a vSphere environment, use the following command:
+  
+  ```
+  kubectl create -f vSphere-storageclass.yml
+  ```
+
 
 
 ## 7. Accessing the Kubernetes Dashboard
