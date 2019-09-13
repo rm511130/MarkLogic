@@ -1,8 +1,8 @@
-# Installation Instructions for MarkLogic on a PKS K8s Cluster
+# Instructions for installing MarkLogic on a PKS K8s Cluster
 
-- [MarkLogic](https://www.marklogic.com/) v10.0.1 installation on a [PKS](https://pivotal.io/platform/pivotal-container-service) v1.5.0 Kubernetes v1.14.5 Cluster 
-- I'm using a Mac (not a Windows PC) and following the instructions in Bill Miller's [blog](https://www.marklogic.com/blog/docker-deploy-kubernetes/) with some changes to accommodate my target environment
-- I also have Docker Desktop Community v2.1.0.2 (37877) on my Mac.
+- These instructions will guide you through the steps necessary to perform a [MarkLogic](https://www.marklogic.com/) v10.0.1 installation on a [PKS](https://pivotal.io/platform/pivotal-container-service) v1.5.0 Kubernetes v1.14.5 Cluster 
+- I'm using a Mac (not a Windows PC) and following the instructions in [Bill Miller's blog](https://www.marklogic.com/blog/docker-deploy-kubernetes/) with some slight variations to accommodate my target environment
+- You will need to have Docker Desktop Community v2.1.0.2 (37877), or a later version, on your Mac if you wish to build the MarkLogic DB and the Nginx Ingress container images. This is an optional step because both images are also available under my public Docker Hub directory.
 
 ## 1. Start by cloning this repo into a `/work` directory:
 
@@ -12,9 +12,9 @@ git clone https://github.com/rm511130/marklogic
 cd /work/marklogic
 ```
 
-## 2. Optional creation of MarkLogic Docker Image
+## 2. (Optional) Creation of MarkLogic Docker Image
 
-- You can skip step #2 by opting to use the [Marklogic v10 Image](https://cloud.docker.com/u/rmeira/repository/docker/rmeira/marklogic10) I have already built. There's actually nothing to be downloaded at this point in time because the scripts we will be using later on, already point to the Docker Images in my Docker Hub repo.
+- You can skip step #2 by opting to use the [Marklogic v10 Image](https://cloud.docker.com/u/rmeira/repository/docker/rmeira/marklogic10) I have already built. The scripts we will be using later on, already point to the Docker Images in my Docker Hub repo.
 
 - If you'd like to build your own Docker Image of Marklogic, then follow the instructions below.
 - First, you will need to downlad [MarkLogic-10.0-1.x86_64.rpm](https://developer.marklogic.com/products/marklogic-server/10.0) directly from [MarkLogic's Product Web site](http://developer.marklogic.com/products) and this step will entail creating a MarkLogic user account.
@@ -30,9 +30,9 @@ docker push rmeira/marklogic10:v1
 
 - Check your [Docker Hub](https://hub.docker.com/) repo to make sure your `marklogic10` image was uploaded properly.
 
-## 3. Optional creation of an Nginx Ingress Controller Docker Image 
+## 3. (Optional) Creation of an Nginx Ingress Controller Docker Image 
 
-- Just like in the previous step #2, you can simply opt to use the [Nginx Docker Image](https://cloud.docker.com/u/rmeira/repository/docker/rmeira/marklogic-nginx) I've already built using the very same steps described below. If you plan to do so, go ahead and skip to step #4. There's no need to download anything at this point, because the scripts we will be using already point to my `rmeira/marklogic-nginx` docker image.
+- Just like in the previous step #2, you can simply opt to use the [Nginx Docker Image](https://cloud.docker.com/u/rmeira/repository/docker/rmeira/marklogic-nginx) I've already built. If you plan to do so, go ahead and skip to step #4. There's no need to download anything, because the scripts we will be using already point to my `rmeira/marklogic-nginx` docker image.
 
 - If you'd like to build your own Nginx Docker Image, then follow the instructions below.
 - Execute `cd /work/marklogic/nginx` and take a look at `nginx` subdirectory. There's a [Dockerfile](https://github.com/rm511130/MarkLogic/blob/master/nginx/Dockerfile) that describes how to build an Nginx Ingress controller Docker Image. Make sure to replace `rmeira` with your own Docker Username before executing the commands below.
@@ -49,14 +49,28 @@ cd /work/marklogic
 
 ## 4. Creation of a Kubernetes Cluster
 
-- I'm leveraging an existing PKS installation, so the process to create a K8s Cluster is quite simple:
+- I'm leveraging an existing PKS installation in the `pcf4u.com` domain, so the process to create a small K8s Cluster is quite simple. We will be creating a cluster called `small` using a PKS plan called `small` that was pre-configured with one Master Node and three Worker Nodes:
 
 ```
 pks login --api https://api.pks.pcf4u.com -k -u pks_admin -p password
-pks create-cluster small --plan small --num-nodes 8 --external-hostname small.pks.pcf4u.com
+pks create-cluster small --plan small --num-nodes 3 --external-hostname small.pks.pcf4u.com
 ```
 
-- Proceed as follows:
+- A DNS entry was made to map `small.pks.pcf4u.com` to `10.0.110.1`, that is, the first available IP address in the PKS Infrastructure Network defined in the Bosh Director and PKS Tiles in Pivotal's Ops Manager UI.
+
+```
+nslookup small.pks.pcf4u.com
+```
+```
+Server:		1.1.1.1
+Address:	1.1.1.1#53
+
+Non-authoritative answer:
+Name:	small.pks.pcf4u.com
+Address: 10.0.110.1
+```
+
+- The `pks create cluster` command will take several minutes to complete. You can check the status of your cluster by proceeding as follows:
 
 ```
 pks cluster small  
@@ -80,24 +94,13 @@ Kubernetes Master IP(s):  10.0.110.1
 Network Profile Name:
 ```
 
-- A DNS entry was made to map `small.pks.pcf4u.com` to `10.0.110.1`
-
-```
-nslookup small.pks.pcf4u.com
-```
-```
-Server:		1.1.1.1
-Address:	1.1.1.1#53
-
-Non-authoritative answer:
-Name:	small.pks.pcf4u.com
-Address: 10.0.110.1
-```
-- And let's get the cluster credentials so we can issue Kubectl commands:
+- Once the cluster has been successfully created, we can proceed to request the `small` cluster credentials so we can issue Kubectl commands:
 
 ```
 pks get-credentials small
 ```
+- You should see a message similar to the following example:
+
 ```
 Fetching credentials for cluster small.
 Context set for cluster small.
@@ -105,28 +108,46 @@ Context set for cluster small.
 You can now switch between clusters by using:
 $kubectl config use-context <cluster-name>
 ```
+
+- Let's verify if the `kubectl` command is working:
+
 ```
 kubectl cluster-info
 ```
+- You should see a message similar to the following example:
+
 ```
 Kubernetes master is running at https://small.pks.pcf4u.com:8443
 CoreDNS is running at https://small.pks.pcf4u.com:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
-```
+``` 
 
 ## 5. Registry Secret
 
 - The [`registry-secret.yml`](https://github.com/rm511130/MarkLogic/blob/master/registry-secret.yml) contains instructions that need to be followed for the creation of your specific `dockerconfigjson` base64 secret.
 
-- In my case, I had to execute:
+- In my case, I had to execute and use the output to alter my `registry-secret.yml` file:
 
 ```
 openssl base64 -in /Users/rmeria/.docker/config.json -out /Users/rmeira/.docker/config_base64.txt
 cat /Users/rmeria/.docker/config_base64.txt
 ```
 
-## 6. Accessing the Kubernetes Dashboard
+## 6. Defining a Pod Security Policy, a Cluster Role and a Cluster Role Binding:
 
-- Execute the following command to access your K8s Dashboard:
+- Execute the following commands:
+
+```
+kubectl create -f marklogic-PodSecurityPolicy.yml
+kubectl create -f marklogic-ClusterRole.yml
+kubectl create -f marklogic-ClusterRoleBinding.yml
+```
+
+- These commands allow the creation of the objects needed to run MarkLogic on K8s.
+
+
+## 7. Accessing the Kubernetes Dashboard
+
+- Using a terminal window that needs to remain open, execute the following command to access your K8s Dashboard:
 
 ```
 kubectl proxy --port=9999
@@ -141,12 +162,12 @@ http://localhost:9999/api/v1/namespaces/kube-system/services/https:kubernetes-da
 
 ![](./images/k8s-dashboard.png)
 
-- Leave the browser open and proceed to step #7.
+- Leave the browser open and proceed to step #8.
 
 
-## 7. Creating a MarkLogic v10 DB on K8s 
+## 8. Creating a MarkLogic v10 DB on K8s 
 
-- With the `small` K8s cluster up and running, we need only execute the following commands:
+- Using the `small` K8s cluster, we need only execute the following commands:
 
 ```
 cd /work/marklogic                      
@@ -155,14 +176,14 @@ kubectl create -f ml-service.yml
 kubectl create -f stateful-set.yml
 ```
 
-- Wait until you see the nine objects pointed out below by the yellow arrows, before proceeding with step #8.
+- Wait until you see the nine objects below (next to the yellow arrows), before proceeding with step #8.
 
 ![](./images/all-is-well.png)
 
-- You may see a _SchedulerPredicates failed due to PersistentVolumeClaim is not bound_ error message, but, if you wait a couple of minutes, you will see that the message goes away once all the components are up and running.
+- You may see a _SchedulerPredicates failed due to PersistentVolumeClaim is not bound_ error message. If that is the case you should wait a couple of minutes and you will see that the message goes away once all the K8s objects are up and running.
 
 
-## 8. Creating an Ingress Controller for our MarkLogic v10 on K8s 
+## 9. Creating an Ingress Controller for our MarkLogic v10 on K8s 
 
 - Execute the following commands:
 
@@ -176,7 +197,9 @@ kubectl create -f nginx-ingress.rc.yml
    - a working nginx-rc ingress Pod
    - a working nginx-ingress-rc Replication Controller
 
-- Now let's take a look at MarkLogic's Admin GUI. Follow the steps shown below:
+## 10. Now let's take a look at MarkLogic's Admin GUI
+
+- Follow the steps shown below:
 
 ![](./images/ml-dashboard.png)
 
