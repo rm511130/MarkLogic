@@ -181,16 +181,16 @@ kubectl create -f nginx-ingress.rc.yml
 ![](./images/ml-dashboard.png)
 
 - The MarkLogic Admin Interface enables you to:
-- Manage basic software configuration
-- Create and configure groups
-- Create and manage databases
-- Create and manage new forests
-- Back up and restore forest content
-- Create and manage new web server and Java-language access paths
-- Create and manage security configurations
-- Tune system performance
-- Configure namespaces and schemas
-- Check the status of resources on your systems
+   - Manage basic software configuration
+   - Create and configure groups
+   - Create and manage databases
+   - Create and manage new forests
+   - Back up and restore forest content
+   - Create and manage new web server and Java-language access paths
+   - Create and manage security configurations
+   - Tune system performance
+   - Configure namespaces and schemas
+   - Check the status of resources on your systems
 
 
 
