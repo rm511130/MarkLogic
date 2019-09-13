@@ -120,25 +120,31 @@ CoreDNS is running at https://small.pks.pcf4u.com:8443/api/v1/namespaces/kube-sy
 - In my case, I had to execute:
 
 ```
-openssl base64 -in /Users/rmeria/.docker/config.json -out /Users/ralphmeria/.docker/config_base64.txt
+openssl base64 -in /Users/rmeria/.docker/config.json -out /Users/rmeira/.docker/config_base64.txt
 cat /Users/rmeria/.docker/config_base64.txt
 ```
 
 ## 6. Accessing the Kubernetes Dashboard
 
-- Execute the following commands to access your K8s Dashboard:
+- Execute the following command to access your K8s Dashboard:
 
 ```
 kubectl proxy --port=9999
-open http://localhost:9999/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/overview
+```
+- Open a browser using the following URL:
+
+```
+http://localhost:9999/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/overview
 ```
 
-- When challenged to login, follow the five steps shown below:
+- When challenged to sign-in, follow the five steps shown below:
 
 ![](./images/k8s-dashboard.png)
 
+- Leave the browser open and proceed to step #7.
 
-## 6. Creating a MarkLogic v10 DB on K8s 
+
+## 7. Creating a MarkLogic v10 DB on K8s 
 
 - With the `small` K8s cluster up and running, we need only execute the following commands:
 
@@ -149,12 +155,14 @@ kubectl create -f ml-service.yml
 kubectl create -f stateful-set.yml
 ```
 
-- Wait until you see the nine objects pointed out below by the yellow arrows, before proceeding with step #7.
+- Wait until you see the nine objects pointed out below by the yellow arrows, before proceeding with step #8.
 
 ![](./images/all-is-well.png)
 
+- You may see a _SchedulerPredicates failed due to PersistentVolumeClaim is not bound_ error message, but, if you wait a couple of minutes, you will see that the message goes away once all the components are up and running.
 
-## 7. Creating an Ingress Controller for our MarkLogic v10 on K8s 
+
+## 8. Creating an Ingress Controller for our MarkLogic v10 on K8s 
 
 - Execute the following commands:
 
@@ -168,13 +176,22 @@ kubectl create -f nginx-ingress.rc.yml
    - a working nginx-rc ingress Pod
    - a working nginx-ingress-rc Replication Controller
 
+- Now let's take a look at MarkLogic's Admin GUI. Follow the steps shown below:
 
-- Now let's take a look:
+![](./images/ml-dashboard.png)
 
-```
-kubectl proxy --port=9999
-open http://localhost:9999/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/overview
-```
+- The MarkLogic Admin Interface enables you to:
+- Manage basic software configuration
+- Create and configure groups
+- Create and manage databases
+- Create and manage new forests
+- Back up and restore forest content
+- Create and manage new web server and Java-language access paths
+- Create and manage security configurations
+- Tune system performance
+- Configure namespaces and schemas
+- Check the status of resources on your systems
+
 
 
 
