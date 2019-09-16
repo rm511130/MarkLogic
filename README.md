@@ -132,7 +132,7 @@ openssl base64 -in ~/.docker/config.json -out ~/.docker/config_base64.txt
 cat ~/.docker/config_base64.txt
 ```
 
-- The registry-secret information is referenced by the [stateful-set.yml](https://github.com/rm511130/MarkLogic/blob/master/stateful-set.yml) definition. We will be using [`registry-secret.yml`](https://github.com/rm511130/MarkLogic/blob/master/registry-secret.yml) when we get to step #9.
+- The registry-secret information is referenced by the [stateful-set.ym](https://github.com/rm511130/MarkLogic/blob/master/stateful-set.yml) definition.
 
 ## 6. Defining a Pod Security Policy, a Cluster Role and a Cluster Role Binding:
 
@@ -164,9 +164,9 @@ kubectl describe storageclasses.storage.k8s.io
   
   - If your K8s cluster were running on an AWS environment, you would use [aws-storageclass.yml](https://github.com/rm511130/MarkLogic/blob/master/aws-storageclass.yml) in the following command:
   
-  ```
-  kubectl create -f aws-storageclass.yml
-  ```
+ ```
+ kubectl create -f aws-storageclass.yml
+ ```
 
 ## 8. Accessing the Kubernetes Dashboard
 

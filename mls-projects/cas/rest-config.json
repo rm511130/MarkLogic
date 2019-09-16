@@ -1,0 +1,8 @@
+{
+  "rest-api": {
+    "name": "8011-cas-rest",
+    "database": "cas",
+    "port": "8011"
+  }
+}
+
