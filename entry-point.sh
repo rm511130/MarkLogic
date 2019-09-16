@@ -29,4 +29,5 @@ else
   ./setup-child.sh "marklogic-0.ml-service.default.svc.cluster.local" $CONFIGURATION_FILE_LOCATION
 fi
 # Do nothing loop to keep script active so it can intercept the container stop signal to shut down MarkLogic
-while true; do :; done
+# while true; do :; done  <-- not a good idea, consumes CPU, so I changed it to use a tail command 
+tail -f /dev/null
