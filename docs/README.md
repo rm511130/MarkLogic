@@ -11,4 +11,5 @@
 - [Yet another ML Docker Image](https://github.com/rlouapre/docker-ml8-java-samplestack)
 - [MarkLogic data ingestion video demo](https://www.youtube.com/watch?v=mxXMJZtR43Q)
 - [MarkLogic UK Demo](https://www.youtube.com/watch?v=60zIQ-6xJ1I&t=382s)
+- [Nginx Set-up Example for Reference](https://stackoverflow.com/questions/42078080/add-nginx-conf-to-kubernetes-cluster)
 
