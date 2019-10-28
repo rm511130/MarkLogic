@@ -237,6 +237,7 @@ kubectl create -f nginx-ingress.rc.yml
    - Tune system performance
    - Configure namespaces and schemas
    - Check the status of resources on your systems
+   
 
 ## 12. Let's Scale-up the MarkLogic Cluster
 
@@ -246,10 +247,22 @@ kubectl create -f nginx-ingress.rc.yml
 
 - Once the replicaset has changed to 6/6, take a look at your MarkLogic GUI:
 
-![](./images/six-ml-servers.png)
+![](./images/6-ml-servers.png)
 
 
-## 13. Delete Everything and Clean-up
+## 13. A few different URLs to test your new MarkLogic Cluster
+
+- To access the following pages you will need to use the same IP Address of the Nginx Ingress Controller used in step 11.
+
+- http://<IP-address-of-Nginx-Ingress>:8001/ Provides Access to the MarkLogic Cluster Summary page
+- http://<IP-address-of-Nginx-Ingress>:8000/qconsole/  Allows you to use SQL e.g. _select * from sys_columns;_
+- http://<IP-address-of-Nginx-Ingress>:8002/nav/?type=databases Gives you access to the Configuration Manager
+- http://<IP-address-of-Nginx-Ingress>:8002/dashboard/disk-space/  Displays the amount of Disk Space available
+- http://<IP-address-of-Nginx-Ingress>:8002/dashboard/load/?interval=5&nav=overview  Displays Read/Write Metrics
+- http://<IP-address-of-Nginx-Ingress>:8002/dashboard/query/?interval=5  Displays a Monitoring Dashboard
+  
+
+## 14. Delete Everything and Clean-up
 
 ```
 pks login --api https://api.pks.pcf4u.com -k -u pks_admin -p password
