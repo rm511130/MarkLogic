@@ -254,12 +254,12 @@ kubectl create -f nginx-ingress.rc.yml
 
 - To access the following pages you will need to use the same IP Address of the Nginx Ingress Controller used in step 11.
 
-- http://<IP-address-of-Nginx-Ingress>:8001/ Provides Access to the MarkLogic Cluster Summary page
-- http://<IP-address-of-Nginx-Ingress>:8000/qconsole/  Allows you to use SQL e.g. _select * from sys_columns;_
-- http://<IP-address-of-Nginx-Ingress>:8002/nav/?type=databases Gives you access to the Configuration Manager
-- http://<IP-address-of-Nginx-Ingress>:8002/dashboard/disk-space/  Displays the amount of Disk Space available
-- http://<IP-address-of-Nginx-Ingress>:8002/dashboard/load/?interval=5&nav=overview  Displays Read/Write Metrics
-- http://<IP-address-of-Nginx-Ingress>:8002/dashboard/query/?interval=5  Displays a Monitoring Dashboard
+- `http://<IP-address-of-Nginx-Ingress>:8001/` Provides Access to the MarkLogic Cluster Summary page
+- `http://<IP-address-of-Nginx-Ingress>:8000/qconsole/`  Allows you to use SQL e.g. _select * from sys_columns;_
+- `http://<IP-address-of-Nginx-Ingress>:8002/nav/?type=databases` Gives you access to the Configuration Manager
+- `http://<IP-address-of-Nginx-Ingress>:8002/dashboard/disk-space/`  Displays the amount of Disk Space available
+- `http://<IP-address-of-Nginx-Ingress>:8002/dashboard/load/?interval=5&nav=overview`  Displays Read/Write Metrics
+- `http://<IP-address-of-Nginx-Ingress>:8002/dashboard/query/?interval=5`  Displays a Monitoring Dashboard
   
 
 ## 14. Delete Everything and Clean-up
