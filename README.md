@@ -238,8 +238,18 @@ kubectl create -f nginx-ingress.rc.yml
    - Configure namespaces and schemas
    - Check the status of resources on your systems
 
+## 12. Let's Scale-up the MarkLogic Cluster
 
-## 12. Delete Everything and Clean-up
+- Follow the steps shown below:
+
+![](./images/replicaset3to6.png)
+
+- Once the replicaset has changed to 6/6, take a look at your MarkLogic GUI:
+
+![](./images/six-ml-servers.png)
+
+
+## 13. Delete Everything and Clean-up
 
 ```
 pks login --api https://api.pks.pcf4u.com -k -u pks_admin -p password
